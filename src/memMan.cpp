@@ -4,6 +4,10 @@
 #include <stdexcept>
 #include <iterator>
 
+/**
+ * @brief This method will print infos abou the memory
+ * @param memoryRegions The map with the data about the memory
+ */
 void printMemoryRegions(const std::map<uintptr_t, MemRegion>& memoryRegions)
 {
     std::cout << std::setw(18) << "Base Address"
@@ -22,6 +26,12 @@ void printMemoryRegions(const std::map<uintptr_t, MemRegion>& memoryRegions)
     }
 }
 
+/**
+ * @brief This is the main of the memroy manager
+ * @param argc -> The number of command line arguments.
+ * @param argv -> The command line arguments.
+ * @return int -> Will return 0 if everything worked, otherwise 1
+ */
 int main(int argc, char* argv[])
 {
     if (argc < 3)

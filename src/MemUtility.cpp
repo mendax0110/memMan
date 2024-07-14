@@ -11,6 +11,9 @@ MemUtility::~MemUtility()
     closeProcess();
 }
 
+/**
+ * @brief This method will search and find the ID of the Process
+ */
 void MemUtility::findProcessID()
 {
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -42,6 +45,10 @@ void MemUtility::findProcessID()
     throw std::runtime_error("Failed to find process ID");
 }
 
+/**
+ * @brief This method will open the process
+ * @param accessRights These are the access rights of the process
+ */
 void MemUtility::openProcess(DWORD accessRights)
 {
     if (this->processID == 0)
@@ -56,6 +63,9 @@ void MemUtility::openProcess(DWORD accessRights)
     }
 }
 
+/**
+ * @brief This is method will close the process
+ */
 void MemUtility::closeProcess()
 {
     if (this->processHandle != nullptr)
@@ -65,6 +75,12 @@ void MemUtility::closeProcess()
     }
 }
 
+/**
+ * @brief This method is in charge of writing to the memory
+ * @param source -> This is the source of the memroy
+ * @param destination -> This is the destination of the mem address
+ * @param size -> This is the size of the memroy
+ */
 void MemUtility::writeMemory(const void* source, uintptr_t destination, size_t size)
 {
     if (this->processHandle == nullptr)
@@ -110,6 +126,11 @@ void MemUtility::writeMemory(const void* source, uintptr_t destination, size_t s
     }
 }
 
+/**
+ * @brief This method will read the memory
+ * @param source -> This is the source of the memroy
+ * @param size -> This is the size of the memroy
+ */
 void MemUtility::readMemory(DWORD source, size_t size)
 {
     if (this->processHandle == nullptr)
@@ -130,6 +151,10 @@ void MemUtility::readMemory(DWORD source, size_t size)
     }
 }
 
+/**
+ * @brief This method will extract all the memory regions
+ * @return std::map<uintptr_t, MemRegion> -> This is the map with the memoryregion infos
+ */
 std::map<uintptr_t, MemRegion> MemUtility::getMemoryRegions()
 {
     if (this->processHandle == nullptr)
@@ -165,6 +190,13 @@ std::map<uintptr_t, MemRegion> MemUtility::getMemoryRegions()
     return memoryRegions;
 }
 
+/**
+ * @brief This method will check if a given address is valid
+ * @param address -> This is the address to be checked
+ * @param size -> This is the size of the given address
+ * @return true , if the address is valid
+ * @return false, if the address is not valid
+ */
 bool MemUtility::isAddressValid(DWORD address, size_t size)
 {
     if (this->processHandle == nullptr)
@@ -213,6 +245,10 @@ bool MemUtility::isAddressValid(DWORD address, size_t size)
     return true;
 }
 
+/**
+ * @brief This method will automatically find a memeory region and write your given value to it
+ * @param value This is the value which will be written into the mem
+ */
 void MemUtility::autoFindMemAndWrite(int value)
 {
     if (this->processHandle == nullptr)
